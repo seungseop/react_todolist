@@ -12,7 +12,7 @@ class TodoItem extends Component {
         */
         return (
             <div className={cx('todo-item')} onClick={onToggle}>
-                <input classname={cx('tick')} type="checkbox" checked={done} readOnly />
+                <input className={cx('tick')} type="checkbox" checked={done} readOnly />
                 <div className={cx('text', {done})}>{children}</div>
                 <div className={cx('delete')} onClick={onRemove}>[지우기]</div>
             </div>
