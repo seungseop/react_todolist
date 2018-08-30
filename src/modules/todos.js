@@ -29,29 +29,30 @@ export default handleActions({
             나중에 이 코드를 보았을 때,
             이 액션이 어떤 데이터를 처리하는지 쉽게 볼 수 있도록 하는 작업입니다.
         */
-       const { id, text, done } = action.playload;
-
-       return state.push(Map({
-           id,
-           text,
-           done
-       }));
+        const { id, text, done } = action.payload;
+        return state.push(Map({
+            id,
+            text,
+            done
+        }));
     },
     [TOGGLE]: (state, action) => {
-        const { payload: index } = action;
-        // = const index = action.payload;
-        /*  비구조화 할당으로 index 레퍼런스에 action.payload 값을 넣습니다.
+        const { payload: id } = action;
+        // = const id = action.payload;
+        /*  비구조화 할당으로 id라는 레퍼런스에 action.payload 값을 넣습니다.
             이 작업이 필수는 아니지만, 나중에 이 코드를 보았을 때 여기에서 payload가
             어떤 값을 의미하는지 쉽게 이해할 수 있습니다.
         */
+
+        // 전달받은 id 를 가지고 index 를 조회합니다.
+        const index = state.findIndex(todo => todo.get('id') === id);
+
         // updateIn으로 현재 값을 참조하여 반대 값으로 설정합니다.
         return state.updateIn([index, 'done'], done => !done);
-        /*  updateIn으로 현재 값을 참조하여 반대 값으로 설정합니다.
-            = return state.setIn([index, 'done'], !state.getIn([0, index]));
-        */
     },
     [REMOVE]: (state, action) => {
-        const { payload: index } = action;
+        const { payload: id } = action;
+        const index = state.findIndex(todo => todo.get('id') === id);
         return state.delete(index);
     }
 }, initialState);
